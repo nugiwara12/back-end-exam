@@ -1,30 +1,22 @@
 <?php
 
-namespace Database\Seeders;
-
-use App\Models\User;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\Hash;
+use App\Models\User;
+use App\Models\Event;
+use App\Models\Ticket;
+use App\Models\Booking;
 
 class DatabaseSeeder extends Seeder
 {
-    use WithoutModelEvents;
-
-    /**
-     * Seed the application's database.
-     */
-    public function run(): void
+    public function run()
     {
-        // User::factory(10)->create();
+        // Create Admins
+        User::factory()->count(2)->admin()->create();
 
-        User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
-            'phone' => '1234567890',
-            'role' => 'admin',
-            'password' => Hash::make('password'),
+        // Create Organizers
+        User::factory()->count(3)->organizer()->create();
 
-        ]);
+        // Create Customers
+        User::factory()->count(10)->create(); // default is customer
     }
 }
