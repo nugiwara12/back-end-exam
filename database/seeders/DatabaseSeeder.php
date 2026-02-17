@@ -5,18 +5,26 @@ use App\Models\User;
 use App\Models\Event;
 use App\Models\Ticket;
 use App\Models\Booking;
+use App\Models\Payment;
 
 class DatabaseSeeder extends Seeder
 {
     public function run()
     {
-        // Create Admins
-        User::factory()->count(2)->admin()->create();
+        User::factory(10)->create()->each(function($user){
+            $user->events()->saveMany(Event::factory(2)->make());
+        });
 
-        // Create Organizers
-        User::factory()->count(3)->organizer()->create();
+        Event::all()->each(function($event){
+            $event->tickets()->saveMany(Ticket::factory(3)->make());
+        });
 
-        // Create Customers
-        User::factory()->count(10)->create(); // default is customer
+        User::all()->each(function($user){
+            $user->bookings()->saveMany(Booking::factory(2)->make());
+        });
+
+        Booking::all()->each(function($booking){
+            Payment::factory()->create(['booking_id' => $booking->id]);
+        });
     }
 }
