@@ -16,8 +16,8 @@ class BookingFactory extends Factory
 
     public function definition() {
         return [
-            'user_id' => User::factory(),
-            'ticket_id' => Ticket::factory(),
+            'user_id' => null, 
+            'ticket_id' => null,
             'quantity' => $this->faker->numberBetween(1,5),
             'status' => $this->faker->randomElement(['pending','confirmed','cancelled']),
         ];

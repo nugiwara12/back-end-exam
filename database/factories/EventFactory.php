@@ -19,7 +19,7 @@ class EventFactory extends Factory
             'description' => $this->faker->paragraph,
             'date' => $this->faker->dateTimeBetween('+1 days', '+1 year'),
             'location' => $this->faker->city,
-            'created_by' => User::factory(),
+            'created_by' => null,
         ];
     }
 }
