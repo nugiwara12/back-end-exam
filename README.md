@@ -2,6 +2,7 @@ Setup Instructions.
 - composer update
 - php artisan key:generate
 - php artisan serve
+- php artisan migrate:fresh --seed
 
 Add Your SMPT key and password using google
     MAIL_MAILER=log
