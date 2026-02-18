@@ -18,23 +18,20 @@ class UserManagementController extends Controller
 
     public function userDetails(Request $request)
     {
-        $user = auth()->user();
+        $perPage = (int) $request->get('per_page', 10);
+
+        $users = User::select('id', 'name', 'email', 'phone', 'role', 'status')
+            ->orderBy('id', 'desc')
+            ->paginate($perPage);
 
         return response()->json([
             'status' => true,
-            'users' => [[
-                'id' => $user->id,
-                'name' => $user->name,
-                'email' => $user->email,
-                'phone' => $user->phone,
-                'role' => $user->role,
-                'status' => $user->status,
-            ]],
+            'users' => $users->items(),
             'pagination' => [
-                'current_page' => 1,
-                'last_page' => 1,
-                'per_page' => 1,
-                'total' => 1,
+                'current_page' => $users->currentPage(),
+                'last_page' => $users->lastPage(),
+                'per_page' => $users->perPage(),
+                'total' => $users->total(),
             ]
         ]);
     }
