@@ -33,7 +33,10 @@ class EventController extends Controller
 
         $event = Event::create($validated);
 
-        return response()->json($event, 201);
+        return response()->json([
+            'message' => 'Event created successfully',
+            'data' => $event
+        ], 201);
     }
 
     public function updateEvent(Request $request, $id)
