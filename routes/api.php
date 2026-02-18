@@ -4,6 +4,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\OrganizerController;
 use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\UserManagementController;
+
 use App\Http\Middleware\AdminMiddleware;
 use App\Http\Middleware\OrganizerMiddleware;
 use App\Http\Middleware\CustomerMiddleware;
@@ -28,3 +30,12 @@ Route::middleware(['auth:sanctum', CustomerMiddleware::class])->prefix('customer
     Route::post('/bookings', [CustomerController::class, 'bookTicket']);
     Route::get('/myBookings', [CustomerController::class, 'myBookings']);
 });
+
+Route::prefix('users')->group(function () {
+    Route::get('/userDetails', [UserManagementController::class, 'userDetails']);
+    Route::post('/AddUser', [UserManagementController::class, 'AddUser']);
+    Route::put('/UpdateUser/{id}', [UserManagementController::class, 'UpdateUser']);
+    Route::delete('/deleteUser/{id}', [UserManagementController::class, 'deleteUser']);
+    Route::patch('/restoreUser/{id}', [UserManagementController::class, 'restoreUser']);
+});
+
